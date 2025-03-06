@@ -53,8 +53,4 @@ This project is open-source and available under the **MIT License**.
 💡 Have fun testing your trivia knowledge with **QuizWhiz**! 🎯  
 ```  
 
-Would you like any modifications to this? 😊
 
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
