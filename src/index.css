@@ -39,19 +39,19 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 220 20% 12%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 222.2 30% 10%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 222.2 30% 10%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 262 80% 60%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 217.2 30% 15%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -81,8 +81,15 @@
   }
   
   body {
-    @apply bg-background text-foreground font-sans overflow-y-auto;
+    @apply bg-background text-foreground font-sans overflow-y-auto transition-colors duration-300;
+  }
+  
+  body.light {
     background-image: linear-gradient(180deg, rgba(155, 135, 245, 0.05) 0%, rgba(155, 135, 245, 0.02) 100%);
+  }
+  
+  body.dark {
+    background-image: linear-gradient(180deg, rgba(62, 54, 98, 0.15) 0%, rgba(38, 33, 60, 0.1) 100%);
   }
   
   #root {
@@ -97,13 +104,22 @@
   
   /* Glass effect */
   .glass {
-    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-sm;
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-sm transition-all duration-300;
+  }
+  
+  .dark .glass {
+    @apply bg-gray-900/60 backdrop-blur-md border border-gray-800/40 shadow-md;
   }
   
   /* Metallic glass effect */
   .metallic-glass {
-    @apply bg-white/80 backdrop-blur-md border border-quiz-metallic-gray/20 shadow-md;
+    @apply bg-white/80 backdrop-blur-md border border-quiz-metallic-gray/20 shadow-md transition-all duration-300;
     background-image: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(240,240,245,0.7));
+  }
+  
+  .dark .metallic-glass {
+    @apply bg-gray-900/70 backdrop-blur-md border border-gray-800/30 shadow-md;
+    background-image: linear-gradient(to bottom, rgba(38, 38, 45, 0.8), rgba(32, 32, 40, 0.7));
   }
   
   /* Animations */
@@ -123,6 +139,11 @@
            active:scale-[0.98] text-left;
   }
   
+  .dark .option-btn {
+    @apply border-quiz-charcoal bg-gray-900/80 
+           hover:border-quiz-metallic-purple;
+  }
+  
   .option-btn.correct {
     @apply border-quiz-correct bg-quiz-correct/10 text-quiz-correct;
   }
@@ -134,5 +155,10 @@
   /* Loading animation */
   .loading-spinner {
     @apply inline-block h-6 w-6 animate-rotate rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em];
+  }
+  
+  /* Theme transition effects */
+  .theme-transition {
+    @apply transition-colors duration-300;
   }
 }

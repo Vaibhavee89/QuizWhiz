@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { fetchQuizQuestions } from "@/services/triviaService";
 import CategorySelector from "@/components/CategorySelector";
@@ -31,12 +30,12 @@ const Index = () => {
   });
   const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
   const [startTime, setStartTime] = useState<number>(0);
+  const [quizTime, setQuizTime] = useState<number>(0);
 
   const currentQuestion = questions[currentQuestionIndex];
   const isLastQuestion = currentQuestionIndex === questions.length - 1;
   const isFirstQuestion = currentQuestionIndex === 0;
 
-  // Load questions when settings change
   const startQuiz = async (settings: QuizSettings) => {
     setQuizState(QuizState.LOADING);
     setQuizSettings(settings);
@@ -55,14 +54,12 @@ const Index = () => {
       setStartTime(Date.now());
       setQuizState(QuizState.PLAYING);
     } else {
-      // Handle error - no questions found
       setQuizState(QuizState.SETUP);
       alert("No questions found. Please try different settings.");
     }
   };
 
   const handleAnswerSelection = (answer: string) => {
-    // Only allow answering once
     if (selectedAnswers[currentQuestion.id] !== undefined) return;
     
     const isCorrect = answer === currentQuestion.correct_answer;
@@ -76,7 +73,6 @@ const Index = () => {
       setScore(prev => prev + 10);
     }
     
-    // Wait for animation before allowing next question
     setTimeout(() => {
       if (isLastQuestion) {
         finishQuiz();
@@ -102,7 +98,6 @@ const Index = () => {
     const endTime = Date.now();
     const timeTaken = endTime - startTime;
     
-    // Count correct answers
     let correctCount = 0;
     for (const [questionId, answer] of Object.entries(selectedAnswers)) {
       const question = questions.find(q => q.id === parseInt(questionId));
@@ -115,10 +110,14 @@ const Index = () => {
       totalQuestions: questions.length,
       correctAnswers: correctCount,
       score,
-      timeTaken
+      timeTaken: quizTime * 1000
     });
     
     setQuizState(QuizState.RESULTS);
+  };
+
+  const handleTimeUpdate = (seconds: number) => {
+    setQuizTime(seconds);
   };
 
   const restartQuiz = () => {
@@ -134,7 +133,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden px-4 py-6 md:py-10">
+    <div className="min-h-screen flex flex-col overflow-x-hidden px-4 py-6 md:py-10 transition-colors duration-300">
       <div className="container max-w-4xl mx-auto flex-1 flex flex-col">
         {quizState === QuizState.SETUP && (
           <div className="flex-1 flex items-center justify-center">
@@ -145,7 +144,7 @@ const Index = () => {
         {quizState === QuizState.LOADING && (
           <div className="flex-1 flex flex-col items-center justify-center">
             <LoadingSpinner size="lg" />
-            <p className="mt-4 text-quiz-gray animate-pulse-subtle">Loading questions...</p>
+            <p className="mt-4 text-quiz-gray dark:text-quiz-medium-gray animate-pulse-subtle">Loading questions...</p>
           </div>
         )}
 
@@ -156,6 +155,8 @@ const Index = () => {
               totalQuestions={questions.length}
               score={score}
               onSettings={setupNewQuiz}
+              isActive={quizState === QuizState.PLAYING}
+              onTimeUpdate={handleTimeUpdate}
               className="mb-8"
             />
             
@@ -164,6 +165,10 @@ const Index = () => {
                 <motion.div 
                   key={currentQuestionIndex}
                   className="flex-1 flex flex-col justify-center"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.3 }}
                 >
                   <QuizCard
                     question={currentQuestion}
