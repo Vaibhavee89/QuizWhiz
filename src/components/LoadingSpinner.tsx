@@ -18,7 +18,7 @@ const LoadingSpinner = ({
     lg: "h-10 w-10",
   };
   
-  const colorClass = color ? `text-${color}` : "text-quiz-blue";
+  const colorClass = color ? `text-${color}` : "text-quiz-metallic-purple";
   
   return (
     <div 

@@ -15,9 +15,6 @@ interface QuizCardProps {
   className?: string;
 }
 
-// Add framer-motion package for animations
-<lov-add-dependency>framer-motion@latest</lov-add-dependency>
-
 const QuizCard: React.FC<QuizCardProps> = ({
   question,
   onAnswer,
@@ -60,12 +57,12 @@ const QuizCard: React.FC<QuizCardProps> = ({
       variants={variants}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       className={cn(
-        "w-full max-w-2xl mx-auto glass rounded-3xl p-6 shadow-lg",
+        "w-full max-w-2xl mx-auto metallic-glass rounded-3xl p-6 shadow-lg",
         className
       )}
     >
       <div className="flex flex-wrap gap-2 mb-4">
-        <Badge variant="outline" className="rounded-full font-medium text-xs py-1">
+        <Badge variant="outline" className="rounded-full font-medium text-xs py-1 bg-quiz-metallic-gray/10 text-quiz-charcoal border-quiz-metallic-gray/30">
           {question.category}
         </Badge>
         <Badge 
@@ -79,7 +76,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
         </Badge>
       </div>
 
-      <h2 className="text-xl sm:text-2xl font-semibold mb-6 leading-tight text-quiz-dark">
+      <h2 className="text-xl sm:text-2xl font-semibold mb-6 leading-tight text-quiz-charcoal">
         {question.question}
       </h2>
 
@@ -98,7 +95,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
                 "option-btn w-full rounded-xl py-4 px-5 text-base sm:text-lg font-medium",
                 isAnswered && isCorrect && "correct",
                 isAnswered && isWrong && "wrong",
-                isSelected && !isAnswered && "border-quiz-blue bg-quiz-light-blue/30"
+                isSelected && !isAnswered && "border-quiz-metallic-purple bg-quiz-metallic-purple/10"
               )}
             >
               <div className="flex justify-between items-center">
