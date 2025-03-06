@@ -3,7 +3,7 @@
 Welcome to **QuizWhiz**, a fast and interactive trivia quiz app that pulls questions from an API and provides instant feedback! 🧠✨  
 
 ## 🚀 Live Demo  
-🔗 [Try QuizWhiz Now](https://lovable.dev/projects/c56d4be7-991f-4d3c-85c6-866188aba73f)  
+🔗 [Try QuizWhiz Now](https://quizzy-sparkle-buzz.lovable.app/)  
 
 ## 📌 Features  
 ✅ Fetches dynamic trivia questions from an API  
