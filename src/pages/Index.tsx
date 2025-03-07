@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { fetchQuizQuestions } from "@/services/triviaService";
 import CategorySelector from "@/components/CategorySelector";
@@ -136,7 +137,15 @@ const Index = () => {
     <div className="min-h-screen flex flex-col overflow-x-hidden px-4 py-6 md:py-10 transition-colors duration-300">
       <div className="container max-w-4xl mx-auto flex-1 flex flex-col">
         {quizState === QuizState.SETUP && (
-          <div className="flex-1 flex items-center justify-center">
+          <div className="flex-1 flex flex-col items-center justify-center">
+            <motion.h1 
+              className="text-4xl md:text-5xl font-bold mb-8 text-quiz-metallic-purple"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              QuizWhiz
+            </motion.h1>
             <CategorySelector onStart={startQuiz} />
           </div>
         )}
