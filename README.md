@@ -36,9 +36,6 @@ npm install
 npm run dev
 ```
 
-## 📦 Deployment  
-To deploy, simply open [Lovable](https://lovable.dev/projects/c56d4be7-991f-4d3c-85c6-866188aba73f) and click on **Share → Publish**.  
-
 ## 💡 How to Contribute  
 We welcome contributions! To contribute:  
 1. Fork the repo and create a new branch.  
