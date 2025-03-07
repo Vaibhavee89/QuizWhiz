@@ -6,6 +6,7 @@ Welcome to **QuizWhiz**, a fast and interactive trivia quiz app that pulls quest
 
 ## 🚀 Live Demo  
 🔗 [Try QuizWhiz Now](https://quiz-whiz-red.vercel.app/)  
+🔗 [Demo Video](https://youtu.be/icaV7Rg3B7E)
 
 ## 📌 Features  
 ✅ Fetches dynamic trivia questions from Trivia API  
