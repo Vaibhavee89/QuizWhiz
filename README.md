@@ -1,6 +1,6 @@
 # QuizWhiz 🎉 - A Fun Trivia Quiz App  
 
-Welcome to **QuizWhiz**, a fast and interactive trivia quiz app that pulls questions from an API and provides instant feedback! 🧠✨
+Welcome to **QuizWhiz**, a fast and interactive trivia quiz app that pulls questions from Trivia API and provides instant feedback! 🧠✨
 ![image](https://github.com/user-attachments/assets/c81b16e0-9668-43c3-b51f-ea2ae6d330e8)
 
 
@@ -8,7 +8,7 @@ Welcome to **QuizWhiz**, a fast and interactive trivia quiz app that pulls quest
 🔗 [Try QuizWhiz Now](https://quiz-whiz-red.vercel.app/)  
 
 ## 📌 Features  
-✅ Fetches dynamic trivia questions from an API  
+✅ Fetches dynamic trivia questions from Trivia API  
 ✅ Instant feedback on correct and incorrect answers  
 ✅ Sleek and modern UI using Tailwind CSS & shadcn-ui  
 ✅ Fast and optimized performance with Vite & React  
