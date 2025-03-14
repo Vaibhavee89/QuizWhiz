@@ -1,15 +1,20 @@
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { fetchQuizQuestions } from "@/services/triviaService";
+import { userService } from "@/services/userService";
+import { leaderboardService } from "@/services/leaderboardService";
 import CategorySelector from "@/components/CategorySelector";
 import QuizCard from "@/components/QuizCard";
 import QuizHeader from "@/components/QuizHeader";
 import Results from "@/components/Results";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import NavBar from "@/components/NavBar";
 import { FormattedQuestion, QuizResult, QuizSettings } from "@/types/quiz";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Trophy } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { toast } from "sonner";
 
 enum QuizState {
   SETUP,
@@ -19,6 +24,7 @@ enum QuizState {
 }
 
 const Index = () => {
+  const navigate = useNavigate();
   const [quizState, setQuizState] = useState<QuizState>(QuizState.SETUP);
   const [questions, setQuestions] = useState<FormattedQuestion[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -36,6 +42,8 @@ const Index = () => {
   const currentQuestion = questions[currentQuestionIndex];
   const isLastQuestion = currentQuestionIndex === questions.length - 1;
   const isFirstQuestion = currentQuestionIndex === 0;
+  const isAuthenticated = userService.isAuthenticated();
+  const currentUser = userService.getCurrentUser();
 
   const startQuiz = async (settings: QuizSettings) => {
     setQuizState(QuizState.LOADING);
@@ -56,7 +64,7 @@ const Index = () => {
       setQuizState(QuizState.PLAYING);
     } else {
       setQuizState(QuizState.SETUP);
-      alert("No questions found. Please try different settings.");
+      toast.error("No questions found. Please try different settings.");
     }
   };
 
@@ -115,6 +123,19 @@ const Index = () => {
     });
     
     setQuizState(QuizState.RESULTS);
+    
+    // If user is logged in, save the score
+    if (isAuthenticated && currentUser) {
+      leaderboardService.saveScore(
+        currentUser.id,
+        currentUser.username,
+        score,
+        quizTime,
+        questions.length,
+        correctCount,
+        quizSettings.category || "Mixed"
+      );
+    }
   };
 
   const handleTimeUpdate = (seconds: number) => {
@@ -136,6 +157,8 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden px-4 py-6 md:py-10 transition-colors duration-300">
       <div className="container max-w-4xl mx-auto flex-1 flex flex-col">
+        <NavBar />
+        
         {quizState === QuizState.SETUP && (
           <div className="flex-1 flex flex-col items-center justify-center">
             <motion.h1 
@@ -147,6 +170,24 @@ const Index = () => {
               QuizWhiz
             </motion.h1>
             <CategorySelector onStart={startQuiz} />
+            
+            {isAuthenticated && (
+              <motion.div
+                className="mt-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+              >
+                <Button
+                  onClick={() => navigate("/leaderboard")}
+                  variant="outline"
+                  className="flex items-center gap-2"
+                >
+                  <Trophy className="h-4 w-4" />
+                  View Leaderboard
+                </Button>
+              </motion.div>
+            )}
           </div>
         )}
 
@@ -220,6 +261,8 @@ const Index = () => {
               result={quizResult}
               onRestart={restartQuiz}
               onNewQuiz={setupNewQuiz}
+              showLoginPrompt={!isAuthenticated}
+              onViewLeaderboard={() => navigate("/leaderboard")}
             />
           </div>
         )}
